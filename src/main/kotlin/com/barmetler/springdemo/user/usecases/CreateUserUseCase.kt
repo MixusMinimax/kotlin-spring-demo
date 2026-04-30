@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional
     readOnly = false,
 )
 class CreateUserUseCase(
-    val userRepository: UserRepository,
-    val passwordEncoder: PasswordEncoder
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder
 ) {
     fun create(email: String, password: String): UserDTO {
         val user = User(
