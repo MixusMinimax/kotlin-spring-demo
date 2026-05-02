@@ -1,12 +1,8 @@
 package com.barmetler.springdemo.security
 
-import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.MalformedJwtException
-import io.jsonwebtoken.security.SecurityException
-import io.jsonwebtoken.security.SignatureException
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import java.security.KeyPair
@@ -16,13 +12,13 @@ import java.util.*
 
 @Service
 class JwtService(
-    private val props: JwtProperties,
+    private val props: SecurityProperties,
     @Qualifier("jwkKeyPair")
     private val keyPair: KeyPair
 ) {
     fun buildToken(
-        extraClaims: MutableMap<String, Any?>?,
-        userId: UUID
+        userId: UUID,
+        extraClaims: MutableMap<String, Any?>? = null,
     ): String {
         val now = Instant.now()
         return Jwts
@@ -30,7 +26,7 @@ class JwtService(
             .claims(extraClaims)
             .subject(userId.toString())
             .issuedAt(Date.from(now))
-            .expiration(Date.from(now.plus(props.expirationTime)))
+            .expiration(Date.from(now.plus(props.jwt.expirationTime)))
             .signWith(keyPair.private)
             .compact()
     }
