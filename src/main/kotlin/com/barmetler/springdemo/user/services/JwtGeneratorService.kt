@@ -1,0 +1,32 @@
+package com.barmetler.springdemo.user.services
+
+import com.barmetler.springdemo.security.SecurityProperties
+import com.barmetler.springdemo.user.domain.User
+import io.jsonwebtoken.Jwts
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.stereotype.Service
+import java.security.PrivateKey
+import java.time.Instant
+import java.util.*
+
+@Service
+class JwtGeneratorService(
+    private val props: SecurityProperties,
+    @Qualifier("jwkPrivateKey")
+    private val privateKey: PrivateKey,
+) {
+    fun buildToken(
+        user: User,
+        extraClaims: MutableMap<String, Any?>? = null,
+    ): String {
+        val now = Instant.now()
+        return Jwts
+            .builder()
+            .claims(extraClaims)
+            .subject(user.id!!.toString())
+            .issuedAt(Date.from(now))
+            .expiration(Date.from(now.plus(props.jwt.expirationTime)))
+            .signWith(privateKey)
+            .compact()
+    }
+}

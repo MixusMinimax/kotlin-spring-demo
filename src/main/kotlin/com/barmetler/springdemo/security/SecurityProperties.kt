@@ -11,7 +11,8 @@ data class SecurityProperties(
 ) {
     data class JwtProperties(
         val jwk: JwkProperties,
-        val expirationTime: Duration = Duration.ofMinutes(15)
+        val expirationTime: Duration = Duration.ofMinutes(15),
+        val secureCookie: Boolean = true,
     ) {
         data class JwkProperties(
             val publicKeyPath: Resource? = null,

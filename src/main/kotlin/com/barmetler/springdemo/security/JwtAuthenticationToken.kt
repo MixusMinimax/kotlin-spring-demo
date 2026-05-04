@@ -5,7 +5,7 @@ import io.jsonwebtoken.Header
 import io.jsonwebtoken.Jwt
 import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
-import java.util.UUID
+import java.util.*
 
 class JwtAuthenticationToken(
     val serialized: String,

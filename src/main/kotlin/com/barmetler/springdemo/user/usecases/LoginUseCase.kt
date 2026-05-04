@@ -1,12 +1,12 @@
 package com.barmetler.springdemo.user.usecases
 
-import com.barmetler.springdemo.security.JwtService
 import com.barmetler.springdemo.security.SecurityProperties
 import com.barmetler.springdemo.user.api.dto.UserIdentifier
 import com.barmetler.springdemo.user.domain.RefreshToken
 import com.barmetler.springdemo.user.domain.RefreshTokenRepository
 import com.barmetler.springdemo.user.domain.User
 import com.barmetler.springdemo.user.domain.User_
+import com.barmetler.springdemo.user.services.JwtGeneratorService
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import jakarta.persistence.criteria.CriteriaQuery
@@ -34,9 +34,33 @@ class LoginUseCase(
     private val em: EntityManager,
     private val refreshTokenRepository: RefreshTokenRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val jwtService: JwtService,
+    private val jwtGenerator: JwtGeneratorService,
 ) {
-    fun login(id: UserIdentifier, password: String): String {
+    data class LoginResult(
+        val refreshToken: String,
+        val sessionToken: String,
+    )
+
+    /**
+     * Checks the [password] for the user selected by [id] using the application context's [PasswordEncoder].
+     *
+     * If provided, the [RefreshToken] identified by [previousRefreshToken] is deleted.
+     * If this token does not exist, it is silently ignored.
+     *
+     * A random [RefreshToken] is generated with the configured expiry settings.
+     *
+     * A session token is generated.
+     *
+     * @param id identifies the user by either an email address or id (more in the future).
+     * @param password raw password string.
+     * @param previousRefreshToken the token string of the existing token. May be null.
+     */
+    fun login(
+        id: UserIdentifier,
+        password: String,
+        previousRefreshToken: String? = null,
+    ): LoginResult {
+        previousRefreshToken?.let { refreshTokenRepository.deleteById(it) }
         val user = em.createQuery(id.toQuery(em)).singleResult
         if (!passwordEncoder.matches(password, user.passwordHash)) {
             throw BadCredentialsException("Invalid Password.")
@@ -52,7 +76,11 @@ class LoginUseCase(
             )
         )
         Assert.state(tokenString == token.token) { "token field does not equal tokenString." }
-        return token.token
+        val sessionToken = jwtGenerator.buildToken(user)
+        return LoginResult(
+            refreshToken = token.token,
+            sessionToken = sessionToken,
+        )
     }
 
     // I'll leave this here for demonstration purposes. But for kotlin, maybe just normal jpa queries are better,

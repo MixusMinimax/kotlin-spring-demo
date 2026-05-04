@@ -1,9 +1,9 @@
 package com.barmetler.springdemo.user.usecases
 
 import com.barmetler.springdemo.user.api.dto.UserDTO
+import com.barmetler.springdemo.user.api.dto.toUserDTO
 import com.barmetler.springdemo.user.domain.User
 import com.barmetler.springdemo.user.domain.UserRepository
-import com.barmetler.springdemo.user.api.dto.toUserDTO
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Isolation
