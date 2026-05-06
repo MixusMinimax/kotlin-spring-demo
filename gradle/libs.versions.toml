@@ -1,3 +1,58 @@
 [versions]
+kotlin = "2.2.21"
+springBoot = "4.0.6"
+springDependencyManagement = "1.1.7"
+hibernate = "7.3.2.Final"
+kotest = "6.1.11"
+springdoc = "3.0.2"
+jjwt = "0.13.0"
+springmockk = "5.0.1"
+
+[libraries]
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-dataJpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
+spring-boot-configurationProcessor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
+
+postgresql = { group = "org.postgresql", name = "postgresql" }
+
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+jackson-kotlin = { group = "tools.jackson.module", name = "jackson-module-kotlin" }
+
+springdoc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools" }
+
+jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "jjwt" }
+jjwt-impl = { group = "io.jsonwebtoken", name = "jjwt-impl", version.ref = "jjwt" }
+jjwt-jackson = { group = "io.jsonwebtoken", name = "jjwt-jackson", version.ref = "jjwt" }
+
+kapt-hibernateProcessor = { group = "org.hibernate.orm", name = "hibernate-processor", version.ref = "hibernate" }
+
+# Tests
+
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test" }
+spring-boot-starter-dataJpa-test = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa-test" }
+spring-boot-starter-security-test = { group = "org.springframework.boot", name = "spring-boot-starter-security-test" }
+spring-boot-starter-webmvc-test = { group = "org.springframework.boot", name = "spring-boot-starter-webmvc-test" }
+
+kotlin-test-junit5 = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit5" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test" }
+h2 = { group = "com.h2database", name = "h2" }
+junit-platformLauncher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5:6.1.11" }
+kotest-extension-spring = { group = "io.kotest", name = "kotest-extensions-spring:6.1.11" }
+
+springmockk = { group = "com.ninja-squad", name = "springmockk", version.ref = "springmockk" }
 
 [plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+kotlin-jpa = { id = "org.jetbrains.kotlin.plugin.jpa", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
+spring-dependencyManagement = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
+
+hibernate = { id = "org.hibernate.orm", version.ref = "hibernate" }
+kotest = { id = "io.kotest", version.ref = "kotest" }
