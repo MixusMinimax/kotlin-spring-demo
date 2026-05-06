@@ -7,9 +7,11 @@ import com.barmetler.springdemo.user.domain.RefreshTokenRepository
 import com.barmetler.springdemo.user.domain.User
 import com.barmetler.springdemo.user.domain.User_
 import com.barmetler.springdemo.user.services.JwtGeneratorService
+import com.barmetler.springdemo.user.services.RefreshTokenGeneratorService
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import jakarta.persistence.criteria.CriteriaQuery
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.Assert
 import java.security.SecureRandom
 import java.time.Instant
+import java.util.Random
 import kotlin.io.encoding.Base64
 import kotlin.random.asKotlinRandom
 
@@ -29,11 +32,10 @@ import kotlin.random.asKotlinRandom
     readOnly = false,
 )
 class LoginUseCase(
-    private val props: SecurityProperties,
-    @PersistenceContext
-    private val em: EntityManager,
-    private val refreshTokenRepository: RefreshTokenRepository,
     private val passwordEncoder: PasswordEncoder,
+    private val em: EntityManager,
+    private val refreshTokenGenerator: RefreshTokenGeneratorService,
+    private val refreshTokenRepository: RefreshTokenRepository,
     private val jwtGenerator: JwtGeneratorService,
 ) {
     data class LoginResult(
@@ -65,17 +67,7 @@ class LoginUseCase(
         if (!passwordEncoder.matches(password, user.passwordHash)) {
             throw BadCredentialsException("Invalid Password.")
         }
-        val random = SecureRandom().asKotlinRandom()
-        val tokenString = Base64.encode(random.nextBytes(48))
-        val now = Instant.now()
-        val token = refreshTokenRepository.save(
-            RefreshToken(
-                token = tokenString,
-                expiresAt = now.plus(props.refreshToken.expirationTime),
-                user = user,
-            )
-        )
-        Assert.state(tokenString == token.token) { "token field does not equal tokenString." }
+        val token = refreshTokenRepository.save(refreshTokenGenerator.generate(user))
         val sessionToken = jwtGenerator.buildToken(user)
         return LoginResult(
             refreshToken = token.token,

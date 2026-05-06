@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.jpa") version "2.2.21"
     kotlin("kapt") version "2.2.21"
     id("org.hibernate.orm") version "7.3.2.Final"
+    id("io.kotest") version "6.1.11"
 }
 
 group = "com.barmetler"
@@ -22,7 +23,14 @@ repositories {
     mavenCentral()
 }
 
-val mockitoAgent = configurations.create("mockitoAgent")
+//val mockitoAgent = configurations.create("mockitoAgent")
+
+configurations {
+    testImplementation {
+        exclude("org.mockito", "mockito-core")
+        exclude("org.mockito", "mockito-junit-jupiter")
+    }
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -44,7 +52,11 @@ dependencies {
     testImplementation("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
+//    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
+
+    testImplementation("com.ninja-squad:springmockk:5.0.1")
+    testImplementation("io.kotest:kotest-runner-junit5:6.1.11")
+    testImplementation("io.kotest:kotest-extensions-spring:6.1.11")
 
     implementation("io.jsonwebtoken:jjwt-api:0.13.0")
     implementation("io.jsonwebtoken:jjwt-impl:0.13.0")
@@ -68,5 +80,6 @@ allOpen {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    jvmArgs("-javaagent:${mockitoAgent.asPath}")
+//    jvmArgs("-javaagent:${mockitoAgent.asPath}")
+    jvmArgs("--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED")
 }

@@ -21,7 +21,8 @@ data class SecurityProperties(
     }
 
     data class RefreshTokenProperties(
-        val expirationTime: Duration = Duration.ofDays(60)
+        val expirationTime: Duration = Duration.ofDays(60),
+        val length: Int = 48,
     )
 }
 

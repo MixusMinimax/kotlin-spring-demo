@@ -4,39 +4,37 @@ import com.barmetler.springdemo.security.JwtParserService
 import com.barmetler.springdemo.user.api.dto.LoginRequest
 import com.barmetler.springdemo.user.api.dto.UserIdentifier
 import com.barmetler.springdemo.user.usecases.CreateUserUseCase
+import io.kotest.core.extensions.ApplyExtension
+import io.kotest.core.spec.style.StringSpec
 import jakarta.transaction.Transactional
 import org.hamcrest.Matchers.emptyString
 import org.hamcrest.Matchers.not
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.platform.commons.logging.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.http.MediaType
 import org.springframework.test.context.TestPropertySource
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import tools.jackson.databind.ObjectMapper
 import kotlin.test.assertNotNull
 
-@ExtendWith(SpringExtension::class)
+@ApplyExtension(io.kotest.extensions.spring.SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = [SpringDemoApplication::class])
 @AutoConfigureMockMvc
 @TestPropertySource("classpath:application-integrationtest.properties")
+@Transactional
 class IntegrationTests @Autowired constructor(
     private val mvc: MockMvc,
     private val objectMapper: ObjectMapper,
     private val jwtParser: JwtParserService,
     private val createUser: CreateUserUseCase,
-) {
-    private val log = LoggerFactory.getLogger(IntegrationTests::class.java)
+) : StringSpec({
+    val log = LoggerFactory.getLogger(IntegrationTests::class.java)
 
-    @Test
-    @Transactional
-    fun loginUseCase_shouldReturnResult_whenValidCredentials() {
+    "LoginUseCase should succeed with valid credentials" {
         val userId = createUser.create(email = "test@example.com", password = "password").id
 
         // language=http-url-reference
@@ -111,4 +109,4 @@ class IntegrationTests @Autowired constructor(
             }
         }
     }
-}
+})

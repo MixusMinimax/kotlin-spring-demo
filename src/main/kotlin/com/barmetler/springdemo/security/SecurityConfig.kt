@@ -18,6 +18,8 @@ import org.springframework.security.web.context.SecurityContextHolderFilter
 import java.security.KeyPair
 import java.security.PrivateKey
 import java.security.PublicKey
+import java.security.SecureRandom
+import java.util.Random
 
 @Configuration
 @EnableConfigurationProperties(SecurityProperties::class)
@@ -64,6 +66,9 @@ class SecurityConfig {
 
     @Bean(defaultCandidate = false)
     fun jwkPrivateKey(@Qualifier("jwkKeyPair") keyPair: KeyPair): PrivateKey = keyPair.private
+
+    @Bean(defaultCandidate = false)
+    fun secureRandom(): Random = SecureRandom()
 
     @Bean
     @Profile("dev")
