@@ -1,0 +1,30 @@
+services:
+  db:
+    container_name: deploy-db
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - "5433:5432" # for direct access from the IDE.
+    env_file:
+      - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+
+  app:
+    container_name: spring-demo
+    image: ghcr.io/mixusminimax/kotlin-spring-demo:0.0.1-rc.1
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SECURITY_JWT_JWK_PRIVATE_KEY_PATH: file:/config/jwk.json
+    env_file:
+      - .env
+    volumes:
+      - ./jwk.json:/config/jwk.json:ro
