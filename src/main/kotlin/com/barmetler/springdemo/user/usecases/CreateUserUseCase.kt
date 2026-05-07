@@ -18,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional
 )
 class CreateUserUseCase(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
 ) {
     fun create(email: String, password: String): UserDTO {
         val user = User(
             email = email,
-            passwordHash = requireNotNull(passwordEncoder.encode(password))
+            passwordHash = requireNotNull(passwordEncoder.encode(password)),
         )
         return userRepository.save(user).toUserDTO()
     }

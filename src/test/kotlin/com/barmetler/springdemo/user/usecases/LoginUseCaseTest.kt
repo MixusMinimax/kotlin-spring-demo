@@ -67,7 +67,7 @@ class LoginUseCaseTest : StringSpec({
         val result = sut.login(
             id = UserIdentifier.Email(fakeUser.email),
             password = "pw",
-            previousRefreshToken = "old"
+            previousRefreshToken = "old",
         )
 
         result.sessionToken shouldEqual "jwt"

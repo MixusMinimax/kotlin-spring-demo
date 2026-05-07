@@ -12,7 +12,6 @@ class JwtAuthenticationProvider : AuthenticationProvider {
         return authentication
     }
 
-    override fun supports(authentication: Class<*>): Boolean {
-        return authentication.kotlin.isSubclassOf(JwtAuthenticationToken::class)
-    }
+    override fun supports(authentication: Class<*>): Boolean =
+        authentication.kotlin.isSubclassOf(JwtAuthenticationToken::class)
 }

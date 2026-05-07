@@ -1,6 +1,5 @@
 package com.barmetler.springdemo.user.usecases
 
-import com.barmetler.springdemo.security.SecurityProperties
 import com.barmetler.springdemo.user.api.dto.UserIdentifier
 import com.barmetler.springdemo.user.domain.RefreshToken
 import com.barmetler.springdemo.user.domain.RefreshTokenRepository
@@ -9,21 +8,13 @@ import com.barmetler.springdemo.user.domain.User_
 import com.barmetler.springdemo.user.services.JwtGeneratorService
 import com.barmetler.springdemo.user.services.RefreshTokenGeneratorService
 import jakarta.persistence.EntityManager
-import jakarta.persistence.PersistenceContext
 import jakarta.persistence.criteria.CriteriaQuery
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.util.Assert
-import java.security.SecureRandom
-import java.time.Instant
-import java.util.Random
-import kotlin.io.encoding.Base64
-import kotlin.random.asKotlinRandom
 
 @Component
 @Transactional(

@@ -9,6 +9,7 @@ import io.kotest.core.spec.style.StringSpec
 import jakarta.transaction.Transactional
 import org.hamcrest.Matchers.emptyString
 import org.hamcrest.Matchers.not
+import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions
 import org.junit.platform.commons.logging.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -37,7 +38,7 @@ class IntegrationTests @Autowired constructor(
     "LoginUseCase should succeed with valid credentials" {
         val userId = createUser.create(email = "test@example.com", password = "password").id
 
-        // language=http-url-reference
+        @Language("http-url-reference")
         val loginResponse = mvc.post("/auth/login") {
             // language=
             contentType = MediaType.APPLICATION_JSON
@@ -45,7 +46,7 @@ class IntegrationTests @Autowired constructor(
                 LoginRequest(
                     user = UserIdentifier.Email("test@example.com"),
                     password = "password",
-                )
+                ),
             )
         }.andExpect {
             status { isOk() }
@@ -73,9 +74,8 @@ class IntegrationTests @Autowired constructor(
         val subject = parsed.userId
         Assertions.assertEquals(userId, subject)
 
-        // language=http-url-reference
+        @Language("http-url-reference")
         val refreshResponse = mvc.post("/auth/refresh") {
-            // language=
             cookie(refreshCookie)
         }.andExpect {
             status { isOk() }
@@ -95,9 +95,10 @@ class IntegrationTests @Autowired constructor(
         val subject2 = parsed2.userId
         Assertions.assertEquals(userId, subject2)
 
-        // language=http-url-reference
-        mvc.post("/auth/logout") {
-            // language=
+        mvc.post(
+            // language="http-url-reference"
+            "/auth/logout",
+        ) {
             cookie(refreshCookie)
         }.andExpect {
             status { isOk() }

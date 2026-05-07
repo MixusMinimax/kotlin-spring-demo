@@ -14,16 +14,8 @@ data class SecurityProperties(
         val expirationTime: Duration = Duration.ofMinutes(15),
         val secureCookie: Boolean = true,
     ) {
-        data class JwkProperties(
-            val publicKeyPath: Resource? = null,
-            val privateKeyPath: Resource,
-        )
+        data class JwkProperties(val publicKeyPath: Resource? = null, val privateKeyPath: Resource)
     }
 
-    data class RefreshTokenProperties(
-        val expirationTime: Duration = Duration.ofDays(60),
-        val length: Int = 48,
-    )
+    data class RefreshTokenProperties(val expirationTime: Duration = Duration.ofDays(60), val length: Int = 48)
 }
-
-

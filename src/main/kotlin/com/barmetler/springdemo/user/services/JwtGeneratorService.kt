@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import java.security.PrivateKey
 import java.time.Instant
-import java.util.*
+import java.util.Date
 
 @Service
 class JwtGeneratorService(

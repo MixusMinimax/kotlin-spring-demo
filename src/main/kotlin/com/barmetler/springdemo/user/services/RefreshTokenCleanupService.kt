@@ -18,8 +18,7 @@ class RefreshTokenCleanupService(
      *
      * Tokens are being kept around for some time to allow for better error handling in attempted logins.
      */
-    @Scheduled(cron = "0 */5 * * * *")
-//    @Scheduled(cron = "0 0 2 * * *")
+    @Scheduled(cron = "0 0 2 * * *")
     fun cleanupRefreshTokens() {
         refreshTokenRepository.deleteAllInvalid(Instant.now().minus(Duration.ofHours(24)))
     }

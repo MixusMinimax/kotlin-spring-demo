@@ -10,7 +10,7 @@ import java.security.PublicKey
 @Service
 class JwtParserService(
     @Qualifier("jwkPublicKey")
-    val publicKey: PublicKey
+    val publicKey: PublicKey,
 ) {
     @Throws(JwtException::class)
     fun parse(token: String): JwtAuthenticationToken {

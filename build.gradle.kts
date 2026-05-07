@@ -9,6 +9,7 @@ plugins {
 
     alias(libs.plugins.hibernate)
     alias(libs.plugins.kotest)
+    alias(libs.plugins.ktlint)
 }
 
 group = "com.barmetler"
