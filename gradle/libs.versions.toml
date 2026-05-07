@@ -40,8 +40,8 @@ kotlin-test-junit5 = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test" }
 h2 = { group = "com.h2database", name = "h2" }
 junit-platformLauncher = { group = "org.junit.platform", name = "junit-platform-launcher" }
-kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5:6.1.11" }
-kotest-extension-spring = { group = "io.kotest", name = "kotest-extensions-spring:6.1.11" }
+kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotest-extension-spring = { group = "io.kotest", name = "kotest-extensions-spring", version.ref = "kotest" }
 
 springmockk = { group = "com.ninja-squad", name = "springmockk", version.ref = "springmockk" }
 
