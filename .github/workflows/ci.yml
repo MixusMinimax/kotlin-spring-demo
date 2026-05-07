@@ -59,6 +59,7 @@ jobs:
         run: ./gradlew ktlintCheck
 
       - name: Reviewdog report
+        if: always()
         uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
@@ -68,5 +69,6 @@ jobs:
             reviewdog \
               -f=checkstyle \
               -reporter=github-pr-check \
+              -filter-mode=added \
               -input="build/reports/ktlint/ktlintMainSourceSetCheck/ktlintMainSourceSetCheck.xml" \
               -name="ktlint"
