@@ -12,15 +12,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/users")
 class UserController(
-    private val createUser: CreateUserUseCase
+    private val createUser: CreateUserUseCase,
 ) {
     @GetMapping
-    fun getUser(): String {
-        return "Hello, World!"
-    }
+    fun getUser(): String = "Hello, World!"
 
     @PostMapping
-    fun createUser(@RequestBody request: CreateUserRequest): UserDTO {
-        return createUser.create(email = request.email, password = request.password)
-    }
+    fun createUser(
+        @RequestBody request: CreateUserRequest,
+    ): UserDTO = createUser.create(email = request.email, password = request.password)
 }

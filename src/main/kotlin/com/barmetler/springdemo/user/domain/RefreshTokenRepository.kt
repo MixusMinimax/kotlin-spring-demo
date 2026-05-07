@@ -15,7 +15,7 @@ interface RefreshTokenRepository : JpaRepository<RefreshToken, String> {
             delete from RefreshToken t
                 where t.expiresAt < :asOf
                    or t.expiresAt < :asOf
-        """
+        """,
     )
     fun deleteAllInvalid(@Param("asOf") asOf: Instant)
 }
