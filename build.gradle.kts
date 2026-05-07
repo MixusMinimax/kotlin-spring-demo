@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.spring.boot.starter.dataJpa)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.liquibase)
     implementation(libs.spring.boot.starter.actuator)
     annotationProcessor(libs.spring.boot.configurationProcessor)
 
