@@ -12,7 +12,7 @@ import java.util.UUID
 class User(
     @Id
     @GeneratedValue
-    var id: UUID? = null,
+    var id:    UUID? = null,
 
     @Column(unique = true, nullable = false)
     var email: String,
