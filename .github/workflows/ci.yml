@@ -43,6 +43,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Setup Reviewdog
+        if: always()
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
@@ -56,7 +62,16 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run linter
-        uses: ScaCap/action-ktlint@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
+        run: ./gradlew ktlintCheck
+
+      - name: Reviewdog report
+        if: always()
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat "build/reports/ktlint/ktlintMainSourceSetCheck/ktlintMainSourceSetCheck.xml" | \
+            reviewdog \
+              -f=checkstyle \
+              -reporter=github-pr-check \
+              -filter-mode=added \
+              -name="ktlint"
