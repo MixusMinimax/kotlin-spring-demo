@@ -90,6 +90,12 @@ allOpen {
     annotation("jakarta.persistence.Embeddable")
 }
 
+tasks.bootJar {
+    layered {
+        enabled.set(true)
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     jvmArgs("--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED")
