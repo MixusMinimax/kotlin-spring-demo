@@ -34,7 +34,7 @@ class RefreshAccessTokenUseCase(
             throw CredentialsExpiredException("refresh token expired")
         }
         val user = token.user
-        // TODO: more claims, permissions, display name, profile picture url, etc.
+        // TODO more claims, permissions, display name, profile picture url, etc.
         return jwtGenerator.buildToken(user)
     }
 }

@@ -1,4 +1,7 @@
 style:
+  FunctionOnlyReturningConstant:
+    ignoreAnnotated:
+      - org.springframework.web.bind.annotation.*Mapping
   MagicNumber:
     active: true
     ignoreAnnotated:
