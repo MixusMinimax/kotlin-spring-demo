@@ -1,3 +1,4 @@
+import dev.detekt.gradle.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -12,6 +13,7 @@ plugins {
     alias(libs.plugins.hibernate)
     alias(libs.plugins.kotest)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 group = "com.barmetler"
@@ -109,5 +111,17 @@ ktlint {
     reporters {
         reporter(ReporterType.PLAIN)
         reporter(ReporterType.CHECKSTYLE)
+    }
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom(file("config/detekt/detekt.yml"))
+}
+
+tasks.withType<Detekt> {
+    reports {
+        sarif.required = true
     }
 }

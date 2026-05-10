@@ -9,6 +9,7 @@ springmockk = "5.0.1"
 
 kotest = "6.1.11"
 ktlint = "14.2.0"
+detekt = "2.0.0-alpha.3"
 
 [libraries]
 spring-boot-starter-dataJpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
@@ -60,3 +61,4 @@ spring-dependencyManagement = { id = "io.spring.dependency-management", version.
 hibernate = { id = "org.hibernate.orm", version.ref = "hibernate" }
 kotest = { id = "io.kotest", version.ref = "kotest" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
