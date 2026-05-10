@@ -1,4 +1,4 @@
-package com.barmetler.springdemo.user.domain
+package com.barmetler.springdemo.user.domain.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

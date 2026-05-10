@@ -1,5 +1,6 @@
 package com.barmetler.springdemo.user.api.dto
 
+import com.barmetler.springdemo.user.application.model.UserIdentifier
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class LoginRequest(

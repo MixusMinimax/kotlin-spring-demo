@@ -1,17 +1,17 @@
-package com.barmetler.springdemo.user.services
+package com.barmetler.springdemo.user.application.service
 
 import com.barmetler.springdemo.security.SecurityProperties
-import com.barmetler.springdemo.user.domain.RefreshToken
-import com.barmetler.springdemo.user.domain.User
+import com.barmetler.springdemo.user.domain.model.RefreshToken
+import com.barmetler.springdemo.user.domain.model.User
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import java.time.Instant
 import java.util.Random
 import kotlin.io.encoding.Base64
 import kotlin.random.asKotlinRandom
 
-@Service
-class RefreshTokenGeneratorService(
+@Component
+class RefreshTokenFactory(
     private val props: SecurityProperties,
     @Qualifier("secureRandom")
     private val random: Random,

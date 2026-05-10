@@ -1,0 +1,16 @@
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "demo@example.com"
+  },
+  "password": "password123"
+}
+
+###
+POST http://localhost:8080/auth/refresh
+
+###
+POST http://localhost:8080/auth/logout

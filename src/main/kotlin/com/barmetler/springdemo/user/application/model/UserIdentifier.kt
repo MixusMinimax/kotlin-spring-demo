@@ -1,7 +1,7 @@
-package com.barmetler.springdemo.user.api.dto
+package com.barmetler.springdemo.user.application.model
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import java.util.*
+import java.util.UUID
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 sealed interface UserIdentifier {

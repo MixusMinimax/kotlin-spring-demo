@@ -4,8 +4,8 @@ import com.barmetler.springdemo.security.SecurityProperties
 import com.barmetler.springdemo.user.api.dto.LoginRequest
 import com.barmetler.springdemo.user.api.dto.LoginResponse
 import com.barmetler.springdemo.user.api.dto.RefreshResponse
-import com.barmetler.springdemo.user.usecases.LoginUseCase
-import com.barmetler.springdemo.user.usecases.RefreshAccessTokenUseCase
+import com.barmetler.springdemo.user.application.usecase.LoginUseCase
+import com.barmetler.springdemo.user.application.usecase.RefreshAccessTokenUseCase
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.BadCredentialsException

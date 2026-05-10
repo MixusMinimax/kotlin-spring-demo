@@ -1,5 +1,6 @@
-package com.barmetler.springdemo.user.domain
+package com.barmetler.springdemo.user.infrastructure.persistence
 
+import com.barmetler.springdemo.user.domain.model.RefreshToken
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query

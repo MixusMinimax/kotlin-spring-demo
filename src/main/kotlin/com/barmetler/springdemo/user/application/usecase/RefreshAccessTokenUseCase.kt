@@ -1,8 +1,8 @@
-package com.barmetler.springdemo.user.usecases
+package com.barmetler.springdemo.user.application.usecase
 
-import com.barmetler.springdemo.user.domain.RefreshToken
-import com.barmetler.springdemo.user.domain.RefreshTokenRepository
-import com.barmetler.springdemo.user.services.JwtGeneratorService
+import com.barmetler.springdemo.user.application.service.JwtFactory
+import com.barmetler.springdemo.user.domain.model.RefreshToken
+import com.barmetler.springdemo.user.infrastructure.persistence.RefreshTokenRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.CredentialsExpiredException
@@ -19,7 +19,7 @@ import java.time.Instant
     readOnly = true,
 )
 class RefreshAccessTokenUseCase(
-    private val jwtGenerator: JwtGeneratorService,
+    private val jwtFactory: JwtFactory,
     private val refreshTokenRepository: RefreshTokenRepository,
 ) {
     fun refresh(tokenString: String): String {
@@ -35,6 +35,6 @@ class RefreshAccessTokenUseCase(
         }
         val user = token.user
         // TODO more claims, permissions, display name, profile picture url, etc.
-        return jwtGenerator.buildToken(user)
+        return jwtFactory.buildToken(user)
     }
 }

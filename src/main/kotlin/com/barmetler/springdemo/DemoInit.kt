@@ -1,6 +1,6 @@
 package com.barmetler.springdemo
 
-import com.barmetler.springdemo.user.usecases.CreateUserUseCase
+import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean

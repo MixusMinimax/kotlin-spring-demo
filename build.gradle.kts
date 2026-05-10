@@ -103,7 +103,7 @@ tasks.bootJar {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    jvmArgs("--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED")
+    jvmArgs("--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED", "--sun-misc-unsafe-memory-access=allow")
 }
 
 ktlint {

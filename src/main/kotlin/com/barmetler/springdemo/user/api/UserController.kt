@@ -1,8 +1,8 @@
 package com.barmetler.springdemo.user.api
 
 import com.barmetler.springdemo.user.api.dto.CreateUserRequest
-import com.barmetler.springdemo.user.api.dto.UserDTO
-import com.barmetler.springdemo.user.usecases.CreateUserUseCase
+import com.barmetler.springdemo.user.application.model.UserDTO
+import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
