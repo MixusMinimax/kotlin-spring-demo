@@ -1,7 +1,7 @@
 package com.barmetler.springdemo.user.application.usecase
 
 import com.barmetler.springdemo.user.application.mapper.toUserDTO
-import com.barmetler.springdemo.user.application.model.UserDTO
+import com.barmetler.springdemo.user.application.model.UserRecord
 import com.barmetler.springdemo.user.domain.model.User
 import com.barmetler.springdemo.user.infrastructure.persistence.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -20,7 +20,7 @@ class CreateUserUseCase(
     private val passwordEncoder: PasswordEncoder,
     private val userRepository: UserRepository,
 ) {
-    fun create(email: String, password: String): UserDTO {
+    fun create(email: String, password: String): UserRecord {
         val user = User(
             email = email,
             passwordHash = requireNotNull(passwordEncoder.encode(password)),

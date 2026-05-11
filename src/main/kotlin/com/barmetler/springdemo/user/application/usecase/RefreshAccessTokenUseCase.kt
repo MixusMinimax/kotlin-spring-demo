@@ -1,7 +1,6 @@
 package com.barmetler.springdemo.user.application.usecase
 
 import com.barmetler.springdemo.user.application.service.JwtFactory
-import com.barmetler.springdemo.user.domain.model.RefreshToken
 import com.barmetler.springdemo.user.infrastructure.persistence.RefreshTokenRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.BadCredentialsException
@@ -25,10 +24,6 @@ class RefreshAccessTokenUseCase(
     fun refresh(tokenString: String): String {
         val token = refreshTokenRepository.findByIdOrNull(tokenString)
             ?: throw BadCredentialsException("invalid or missing refresh token")
-        return refresh(token)
-    }
-
-    fun refresh(token: RefreshToken): String {
         val now = Instant.now()
         if (!token.isValid(now)) {
             throw CredentialsExpiredException("refresh token expired")

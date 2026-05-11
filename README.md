@@ -70,8 +70,6 @@ example by right-clicking the test folder and choosing `Run 'Tests in 'spring-de
 - CI on GitHub for testing, ktlint, detekt
 - CI on GitHub for creating semver docker images and publishing to ghcr.io
 
-### TOC
-
 ### Technologies Used
 
 - Kotlin 2.3.21
@@ -202,34 +200,15 @@ reality they belong to another.
 That being said, there are definitely general purpose classes that may be needed in all features, which can still lie
 outside this structure.
 
-A real vertical-slice pattern would probably do away with the sub-folders that define the concern, so the structure
-would look more like this:
-
-```yml
-# many modules ...
-cat:
-  - Cat
-  - CatRepository
-  - CatService
-  - CatController
-# many modules ...
-dog:
-  - Dog
-  - DogRepository
-  - DogService
-  - DogController
-# many modules ...
-```
-
 However, a somewhat hybrid approach is also possible. There is no "right" solution, but one that proves to work well for
 a given team.
 
 #### CQRS-lite and Hexagonal Architecture
 
 While I do not fully follow a request-mediator-handler approach, as is more popular in .NET applications, I chose to
-experiment with a somewhat similar approach:
+experiment with a somewhat related approach:
 
-Instead of having one large service per feature that includes dozens of public functions, and often gets thousands of
+Instead of having one large service per feature that includes dozens of public functions, and often gets to thousands of
 lines in length, I created one handler per actual use case.
 
 In a typical "service", we often have many functions that don't actually interact with each other. They are simply
@@ -276,16 +255,13 @@ This has many advantages:
 This is because each use case requests only the functionality from its dependencies that it actually needs, whereas a
 conventional service has to request all functionalities that _any_ of its functions needs, combined.
 
-You could pretend that a JPA repository interface is the "persistence port" defined by the application layer, its
-dynamically generated implementation is an adapter, and the actual hibernate runtime is part of the infrastructure. This
-is because despite the name, a repository really just defines functions that accept domain types and return domain
-types. That these domain types are actually entities at run time, is hidden at compile-time.
+It's not _really_ hexagonal architecture, but the same concept applies:
 
-In the other direction, the function signature of the use case is a port, and the rest controller an adapter.
+The application layer does not concern itself with rest, and it does not really concern itself with hibernate. That
+second point is not fully separated though. Technically, domain entities should not be annotated with @Entity, and the
+domain and application could actually lie in its own Gradle project that has no dependency on hibernate or even jpa.
 
-Like previously mentioned, this project is a hybrid approach between a bunch of different architectures, just to play
-around with different concepts and solutions.
-
-In closing, the application layer doesn't know that the types it operates on are annotated with `@Entity`. Therefore,
-hexagonal principles are still followed, even if only skin-deep. Following these principles more strictly is only really
-needed if you wish to extract the application layer into a separate Gradle project.
+For a smaller project, this hybrid approach works quite well, as it does not have to deal with all the boilerplate code
+introduced by another mapping layer. One could pretend that JPA annotations and hibernate proxies are not directly
+visible to the application source code, so from a code quality standpoint, it does the job of abstracting that
+implementation detail away.
