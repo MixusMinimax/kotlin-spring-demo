@@ -1,33 +1,29 @@
 package com.barmetler.springdemo.user.usecases
 
-import com.barmetler.springdemo.user.api.dto.UserIdentifier
-import com.barmetler.springdemo.user.domain.RefreshToken
-import com.barmetler.springdemo.user.domain.RefreshTokenRepository
-import com.barmetler.springdemo.user.domain.User
-import com.barmetler.springdemo.user.services.JwtGeneratorService
-import com.barmetler.springdemo.user.services.RefreshTokenGeneratorService
+import com.barmetler.springdemo.user.application.model.UserIdentifier
+import com.barmetler.springdemo.user.application.service.JwtFactory
+import com.barmetler.springdemo.user.application.service.RefreshTokenFactory
+import com.barmetler.springdemo.user.application.usecase.LoginUseCase
+import com.barmetler.springdemo.user.domain.model.RefreshToken
+import com.barmetler.springdemo.user.domain.model.User
+import com.barmetler.springdemo.user.infrastructure.persistence.RefreshTokenRepository
+import com.barmetler.springdemo.user.infrastructure.persistence.UserRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldEqual
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import jakarta.persistence.EntityManager
-import jakarta.persistence.TypedQuery
-import jakarta.persistence.criteria.CriteriaBuilder
-import jakarta.persistence.criteria.CriteriaQuery
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.Instant
-import java.util.*
+import java.util.UUID
 
 class LoginUseCaseTest : StringSpec({
-    val criteriaBuilder = mockk<CriteriaBuilder>(relaxed = true)
-    val query = mockk<TypedQuery<User>>()
-    val em = mockk<EntityManager>()
-    val refreshTokenGenerator = mockk<RefreshTokenGeneratorService>()
+    val refreshTokenFactory = mockk<RefreshTokenFactory>()
     val refreshTokenRepository = mockk<RefreshTokenRepository>()
     val passwordEncoder = mockk<PasswordEncoder>()
-    val jwtGenerator = mockk<JwtGeneratorService>()
+    val jwtFactory = mockk<JwtFactory>()
+    val userRepository = mockk<UserRepository>()
 
     val fakeUser = User(
         id = UUID.fromString("35e96262-cd0a-4aa8-b6bc-6bc3a0a15514"),
@@ -44,25 +40,23 @@ class LoginUseCaseTest : StringSpec({
 
     val sut = LoginUseCase(
         passwordEncoder = passwordEncoder,
-        em = em,
-        refreshTokenGenerator = refreshTokenGenerator,
+        jwtFactory = jwtFactory,
+        refreshTokenFactory = refreshTokenFactory,
         refreshTokenRepository = refreshTokenRepository,
-        jwtGenerator = jwtGenerator,
+        userRepository = userRepository,
     )
 
     "login should return correct tokens with valid credentials" {
-        every { refreshTokenGenerator.generate(any()) } returns fakeToken
-
-        every { em.criteriaBuilder } returns criteriaBuilder
-        every { em.createQuery(any<CriteriaQuery<User>>()) } returns query
-        every { query.singleResult } returns fakeUser
+        every { refreshTokenFactory.generate(any()) } returns fakeToken
 
         every { passwordEncoder.matches("pw", "hashed") } returns true
 
         every { refreshTokenRepository.deleteById(any()) } just Runs
         every { refreshTokenRepository.save(any()) } answers { firstArg() }
 
-        every { jwtGenerator.buildToken(fakeUser) } returns "jwt"
+        every { jwtFactory.buildToken(fakeUser) } returns "jwt"
+
+        every { userRepository.findById(any<UserIdentifier>()) } returns fakeUser
 
         val result = sut.login(
             id = UserIdentifier.Email(fakeUser.email),

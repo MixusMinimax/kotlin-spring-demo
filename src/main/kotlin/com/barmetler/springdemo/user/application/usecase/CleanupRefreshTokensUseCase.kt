@@ -1,14 +1,13 @@
-package com.barmetler.springdemo.user.services
+package com.barmetler.springdemo.user.application.usecase
 
 import com.barmetler.springdemo.security.SecurityProperties
-import com.barmetler.springdemo.user.domain.RefreshToken
-import com.barmetler.springdemo.user.domain.RefreshTokenRepository
-import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Service
+import com.barmetler.springdemo.user.domain.model.RefreshToken
+import com.barmetler.springdemo.user.infrastructure.persistence.RefreshTokenRepository
+import org.springframework.stereotype.Component
 import java.time.Instant
 
-@Service
-class RefreshTokenCleanupService(
+@Component
+class CleanupRefreshTokensUseCase(
     private val props: SecurityProperties,
     private val refreshTokenRepository: RefreshTokenRepository,
 ) {
@@ -19,7 +18,6 @@ class RefreshTokenCleanupService(
      *
      * Tokens are being kept around for some time to allow for better error handling in attempted logins.
      */
-    @Scheduled(cron = $$"${security.refresh-token.cleanup-cron}")
     fun cleanupRefreshTokens() {
         refreshTokenRepository.deleteAllInvalid(Instant.now().minus(props.refreshToken.deleteAfter))
     }

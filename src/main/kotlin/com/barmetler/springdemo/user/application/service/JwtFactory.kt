@@ -1,16 +1,16 @@
-package com.barmetler.springdemo.user.services
+package com.barmetler.springdemo.user.application.service
 
 import com.barmetler.springdemo.security.SecurityProperties
-import com.barmetler.springdemo.user.domain.User
+import com.barmetler.springdemo.user.domain.model.User
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import java.security.PrivateKey
 import java.time.Instant
 import java.util.Date
 
-@Service
-class JwtGeneratorService(
+@Component
+class JwtFactory(
     private val props: SecurityProperties,
     @Qualifier("jwkPrivateKey")
     private val privateKey: PrivateKey,

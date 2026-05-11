@@ -4,6 +4,10 @@ root = true
 indent_style = space
 insert_final_newline = true
 
+[*.md]
+indent_size = 2
+tab_width = 2
+
 [*.{kt,kts}]
 indent_size = 4
 tab_width = 4
@@ -21,3 +25,7 @@ ktlint_code_style = intellij_idea
 ktlint_standard_no-blank-line-in-list = disabled
 ktlint_standard_function-signature = disabled
 ktlint_standard_class-signature = disabled
+
+[*.{yml,yaml}]
+indent_size = 2
+tab_width = 2

@@ -2,8 +2,8 @@ package com.barmetler.springdemo
 
 import com.barmetler.springdemo.security.JwtParserService
 import com.barmetler.springdemo.user.api.dto.LoginRequest
-import com.barmetler.springdemo.user.api.dto.UserIdentifier
-import com.barmetler.springdemo.user.usecases.CreateUserUseCase
+import com.barmetler.springdemo.user.application.model.UserIdentifier
+import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.StringSpec
 import jakarta.transaction.Transactional
