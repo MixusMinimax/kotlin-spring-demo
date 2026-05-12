@@ -17,10 +17,10 @@ import com.nimbusds.jwt.SignedJWT
 import com.nimbusds.jwt.proc.DefaultJWTProcessor
 import com.nimbusds.jwt.proc.JWTClaimsSetVerifier
 
-class MyJwtProcessor<C : SecurityContext?>(private val jwkSource: JWKSource<C?>) : DefaultJWTProcessor<C?>() {
+class MyJwtProcessor<C : SecurityContext>(private val jwkSource: JWKSource<C>) : DefaultJWTProcessor<C>() {
     init {
         jwsTypeVerifier = JOSEObjectTypeVerifier { _, _ -> }
-        jwsKeySelector = jwsKeySelector<C?>(jwkSource)
+        jwsKeySelector = jwsKeySelector(jwkSource)
         jwtClaimsSetVerifier = JWTClaimsSetVerifier { _, _ -> }
     }
 
@@ -38,7 +38,7 @@ class MyJwtProcessor<C : SecurityContext?>(private val jwkSource: JWKSource<C?>)
             ).filterIsInstance<OctetKeyPair>()
 
             for (key in keyCandidates) {
-                val verifier = Ed25519Verifier(key)
+                val verifier = Ed25519Verifier(key.toPublicJWK())
 
                 val validSignature = signedJWT.verify(verifier)
 
@@ -50,9 +50,9 @@ class MyJwtProcessor<C : SecurityContext?>(private val jwkSource: JWKSource<C?>)
         return super.process(signedJWT, context)
     }
 
-    private fun <C : SecurityContext?> jwsKeySelector(
-        jwkSource: JWKSource<C?>,
-    ): JWSKeySelector<C?> = JWSVerificationKeySelector<C?>(
+    private fun <C : SecurityContext> jwsKeySelector(
+        jwkSource: JWKSource<C>,
+    ): JWSKeySelector<C?> = JWSVerificationKeySelector<C>(
         JWSAlgorithm.Family.SIGNATURE.toSet(),
         jwkSource,
     )

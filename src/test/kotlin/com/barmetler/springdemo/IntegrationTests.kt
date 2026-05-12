@@ -5,20 +5,22 @@ import com.barmetler.springdemo.user.application.model.UserIdentifier
 import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.equals.shouldEqual
 import jakarta.transaction.Transactional
 import org.hamcrest.Matchers.emptyString
 import org.hamcrest.Matchers.not
 import org.intellij.lang.annotations.Language
-import org.junit.jupiter.api.Assertions
 import org.junit.platform.commons.logging.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.http.MediaType
+import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import tools.jackson.databind.ObjectMapper
+import java.util.UUID
 import kotlin.test.assertNotNull
 
 @ApplyExtension(io.kotest.extensions.spring.SpringExtension::class)
@@ -29,7 +31,7 @@ import kotlin.test.assertNotNull
 class IntegrationTests @Autowired constructor(
     private val mvc: MockMvc,
     private val objectMapper: ObjectMapper,
-    private val jwtParser: JwtParserService,
+    private val jwtDecoder: JwtDecoder,
     private val createUser: CreateUserUseCase,
 ) : StringSpec({
     val log = LoggerFactory.getLogger(IntegrationTests::class.java)
@@ -68,9 +70,9 @@ class IntegrationTests @Autowired constructor(
         log.info { "refreshToken: $refreshToken" }
         log.info { "sessionToken: $sessionToken" }
 
-        val parsed = jwtParser.parse(sessionToken)
-        val subject = parsed.userId
-        Assertions.assertEquals(userId, subject)
+        val parsed = jwtDecoder.decode(sessionToken)
+        val subject = UUID.fromString(parsed.subject)
+        subject shouldEqual userId
 
         @Language("http-url-reference")
         val refreshResponse = mvc.post("/auth/refresh") {
@@ -89,9 +91,9 @@ class IntegrationTests @Autowired constructor(
 
         log.info { "sessionToken2: $sessionToken2" }
 
-        val parsed2 = jwtParser.parse(sessionToken2)
-        val subject2 = parsed2.userId
-        Assertions.assertEquals(userId, subject2)
+        val parsed2 = jwtDecoder.decode(sessionToken)
+        val subject2 = UUID.fromString(parsed2.subject)
+        subject2 shouldEqual userId
 
         mvc.post(
             // language="http-url-reference"
