@@ -1,5 +1,7 @@
 import dev.detekt.gradle.Detekt
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     alias(libs.plugins.kotlin.jvm)

@@ -6,7 +6,6 @@ import com.barmetler.springdemo.user.application.service.RefreshTokenFactory
 import com.barmetler.springdemo.user.domain.model.RefreshToken
 import com.barmetler.springdemo.user.infrastructure.persistence.RefreshTokenRepository
 import com.barmetler.springdemo.user.infrastructure.persistence.UserRepository
-import jakarta.persistence.NoResultException
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
@@ -52,7 +51,7 @@ class LoginUseCase(
         previousRefreshToken: String? = null,
     ): LoginResult {
         previousRefreshToken?.let { refreshTokenRepository.deleteById(it) }
-        val user = userRepository.findById(id) ?: throw NoResultException()
+        val user = userRepository.findById(id) ?: throw BadCredentialsException("Invalid user.")
         if (!passwordEncoder.matches(password, user.passwordHash)) {
             throw BadCredentialsException("Invalid Password.")
         }
