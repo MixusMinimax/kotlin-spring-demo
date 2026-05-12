@@ -1,6 +1,5 @@
 package com.barmetler.springdemo
 
-import com.barmetler.springdemo.security.JwtParserService
 import com.barmetler.springdemo.user.api.dto.LoginRequest
 import com.barmetler.springdemo.user.application.model.UserIdentifier
 import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
@@ -40,7 +39,6 @@ class IntegrationTests @Autowired constructor(
 
         @Language("http-url-reference")
         val loginResponse = mvc.post("/auth/login") {
-            // language=
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(
                 LoginRequest(
