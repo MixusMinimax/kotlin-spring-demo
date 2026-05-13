@@ -25,6 +25,7 @@ ktlint_code_style = intellij_idea
 ktlint_standard_no-blank-line-in-list = disabled
 ktlint_standard_function-signature = disabled
 ktlint_standard_class-signature = disabled
+ktlint_standard_no-unused-imports = enabled
 
 [*.{yml,yaml}]
 indent_size = 2

@@ -6,7 +6,6 @@ import com.nimbusds.jose.crypto.Ed25519Verifier
 import com.nimbusds.jose.jwk.JWKMatcher
 import com.nimbusds.jose.jwk.JWKSelector
 import com.nimbusds.jose.jwk.OctetKeyPair
-import com.nimbusds.jose.jwk.gen.OctetKeyPairGenerator
 import com.nimbusds.jose.jwk.source.JWKSource
 import com.nimbusds.jose.proc.BadJOSEException
 import com.nimbusds.jose.proc.JOSEObjectTypeVerifier
