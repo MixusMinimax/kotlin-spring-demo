@@ -9,6 +9,14 @@ Content-Type: application/json
   "password": "password123"
 }
 
+> {%
+    client.global.set("auth_token", response.body.sessionToken);
+%}
+
+###
+GET http://localhost:8080/auth/info
+Authorization: Bearer {{auth_token}}
+
 ###
 POST http://localhost:8080/auth/refresh
 

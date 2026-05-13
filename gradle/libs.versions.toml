@@ -1,10 +1,11 @@
 [versions]
 kotlin = "2.3.21"
+kotlin-logging = "8.0.02"
 springBoot = "4.0.6"
 springDependencyManagement = "1.1.7"
 hibernate = "7.3.2.Final"
 springdoc = "3.0.2"
-jjwt = "0.13.0"
+google-tink = "1.21.0"
 springmockk = "5.0.1"
 
 kotest = "6.1.11"
@@ -14,6 +15,7 @@ detekt = "2.0.0-alpha.3"
 [libraries]
 spring-boot-starter-dataJpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
 spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+spring-boot-starter-oauth2ResourceServer = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server" }
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
 spring-boot-starter-liquibase = { group = "org.springframework.boot", name = "spring-boot-starter-liquibase" }
 spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator" }
@@ -21,15 +23,15 @@ spring-boot-configurationProcessor = { group = "org.springframework.boot", name 
 
 postgresql = { group = "org.postgresql", name = "postgresql" }
 
+google-tink = { group = "com.google.crypto.tink", name = "tink", version.ref = "google-tink" }
+
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
 jackson-kotlin = { group = "tools.jackson.module", name = "jackson-module-kotlin" }
 
+kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging-jvm", version.ref = "kotlin-logging" }
+
 springdoc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
 spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools" }
-
-jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "jjwt" }
-jjwt-impl = { group = "io.jsonwebtoken", name = "jjwt-impl", version.ref = "jjwt" }
-jjwt-jackson = { group = "io.jsonwebtoken", name = "jjwt-jackson", version.ref = "jjwt" }
 
 kapt-hibernateProcessor = { group = "org.hibernate.orm", name = "hibernate-processor", version.ref = "hibernate" }
 

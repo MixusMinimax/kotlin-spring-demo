@@ -6,14 +6,17 @@ import com.barmetler.springdemo.user.api.dto.LoginResponse
 import com.barmetler.springdemo.user.api.dto.RefreshResponse
 import com.barmetler.springdemo.user.application.usecase.LoginUseCase
 import com.barmetler.springdemo.user.application.usecase.RefreshAccessTokenUseCase
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.CookieValue
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.security.Principal
 
 @RestController
 @RequestMapping("/auth")
@@ -22,6 +25,8 @@ class AuthenticationController(
     private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase,
     private val loginUseCase: LoginUseCase,
 ) {
+    private val logger = KotlinLogging.logger {}
+
     @PostMapping("/refresh")
     fun refresh(@CookieValue("refresh-token") tokenString: String?): RefreshResponse {
         if (tokenString == null) {
@@ -57,5 +62,11 @@ class AuthenticationController(
         }
         response.addCookie(cookie)
         return "logged out."
+    }
+
+    @GetMapping("/info")
+    fun info(principal: Principal): String {
+        logger.info { principal }
+        return principal.name
     }
 }

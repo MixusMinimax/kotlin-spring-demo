@@ -1,6 +1,5 @@
 package com.barmetler.springdemo.security
 
-import org.intellij.lang.annotations.Language
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.bind.DefaultValue
 import org.springframework.core.io.Resource
@@ -18,8 +17,10 @@ data class SecurityProperties(
         val secureCookie: Boolean = true,
     ) {
         data class JwkProperties(
-            val publicKeyPath: Resource? = null,
-            val privateKeyPath: Resource,
+            val publicKeySetPath: Resource? = null,
+            val privateKeySetPath: Resource,
+            val signingAlg: String,
+            val signingKid: String? = null,
         )
     }
 

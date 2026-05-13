@@ -23,8 +23,9 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      SECURITY_JWT_JWK_PRIVATE_KEY_PATH: file:/config/jwk.json
+      SECURITY_JWT_JWK_PRIVATE_KEY_SET_PATH: file:/config/jwks.json
+      SECURITY_JWT_JWK_PUBLIC_KEY_SET_PATH: file:/config/jwks.json
     env_file:
       - .env
     volumes:
-      - ./jwk.json:/config/jwk.json:ro
+      - ./jwks.json:/config/jwks.json:ro

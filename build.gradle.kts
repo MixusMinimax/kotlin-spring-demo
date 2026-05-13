@@ -41,10 +41,14 @@ dependencies {
     // Spring Boot starters
     implementation(libs.spring.boot.starter.dataJpa)
     implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.oauth2ResourceServer)
     implementation(libs.spring.boot.starter.web)
     implementation(libs.spring.boot.starter.liquibase)
     implementation(libs.spring.boot.starter.actuator)
     annotationProcessor(libs.spring.boot.configurationProcessor)
+
+    // crypt
+    runtimeOnly(libs.google.tink)
 
     // Database
     runtimeOnly(libs.postgresql)
@@ -55,10 +59,8 @@ dependencies {
     // Jackson Kotlin module
     implementation(libs.jackson.kotlin)
 
-    // JJWT
-    implementation(libs.jjwt.api)
-    implementation(libs.jjwt.impl)
-    implementation(libs.jjwt.jackson)
+    // Logging
+    implementation(libs.kotlin.logging)
 
     // Dev tools
     implementation(libs.springdoc.ui)
