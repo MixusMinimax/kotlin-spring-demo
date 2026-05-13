@@ -17,7 +17,7 @@ data class SecurityProperties(
         val secureCookie: Boolean = true,
     ) {
         data class JwkProperties(
-            val publicKeySetPath: Resource,
+            val publicKeySetPath: Resource? = null,
             val privateKeySetPath: Resource,
             val signingAlg: String,
             val signingKid: String? = null,

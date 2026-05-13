@@ -6,6 +6,7 @@ import com.nimbusds.jose.crypto.Ed25519Verifier
 import com.nimbusds.jose.jwk.JWKMatcher
 import com.nimbusds.jose.jwk.JWKSelector
 import com.nimbusds.jose.jwk.OctetKeyPair
+import com.nimbusds.jose.jwk.gen.OctetKeyPairGenerator
 import com.nimbusds.jose.jwk.source.JWKSource
 import com.nimbusds.jose.proc.BadJOSEException
 import com.nimbusds.jose.proc.JOSEObjectTypeVerifier
@@ -32,13 +33,14 @@ class MyJwtProcessor<C : SecurityContext>(private val jwkSource: JWKSource<C>) :
                 JWKSelector(
                     JWKMatcher.Builder()
                         .algorithm(signedJWT.header.algorithm)
+                        .let { if (signedJWT.header.keyID != null) it.keyID(signedJWT.header.keyID) else it }
                         .build(),
                 ),
                 context,
             ).filterIsInstance<OctetKeyPair>()
 
             for (key in keyCandidates) {
-                val verifier = Ed25519Verifier(key.toPublicJWK())
+                val verifier = Ed25519Verifier(key)
 
                 val validSignature = signedJWT.verify(verifier)
 

@@ -6,6 +6,7 @@ import com.barmetler.springdemo.user.api.dto.LoginResponse
 import com.barmetler.springdemo.user.api.dto.RefreshResponse
 import com.barmetler.springdemo.user.application.usecase.LoginUseCase
 import com.barmetler.springdemo.user.application.usecase.RefreshAccessTokenUseCase
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.BadCredentialsException
@@ -24,6 +25,8 @@ class AuthenticationController(
     private val refreshAccessTokenUseCase: RefreshAccessTokenUseCase,
     private val loginUseCase: LoginUseCase,
 ) {
+    private val logger = KotlinLogging.logger {}
+
     @PostMapping("/refresh")
     fun refresh(@CookieValue("refresh-token") tokenString: String?): RefreshResponse {
         if (tokenString == null) {
@@ -63,9 +66,7 @@ class AuthenticationController(
 
     @GetMapping("/info")
     fun info(principal: Principal): String {
-        val auth = principal
-        println(auth)
-
-        return "todo"
+        logger.info { principal }
+        return principal.name
     }
 }

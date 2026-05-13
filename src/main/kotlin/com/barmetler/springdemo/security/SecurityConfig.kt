@@ -67,13 +67,10 @@ class SecurityConfig {
 
     @Bean
     fun jwtDecoder(props: SecurityProperties): JwtDecoder {
-        val json = props.jwt.jwk.publicKeySetPath.inputStream.bufferedReader().use { it.readText() }
-        val jwkSet = JWKSet.parse(json)
+        val json = (props.jwt.jwk.publicKeySetPath ?: props.jwt.jwk.privateKeySetPath).inputStream.bufferedReader()
+            .use { it.readText() }
+        val jwkSet = JWKSet.parse(json).toPublicJWKSet()
         val jwkSource = ImmutableJWKSet<SecurityContext>(jwkSet)
-//        return NimbusJwtDecoder.withJwkSource(jwkSource).jwtProcessorCustomizer { processor ->
-//            processor.jwsKeySelector =
-//                JWSVerificationKeySelector(JWSAlgorithm.Family.SIGNATURE.toSet(), jwkSource)
-//        }.build()
         return NimbusJwtDecoder(MyJwtProcessor(jwkSource))
     }
 
