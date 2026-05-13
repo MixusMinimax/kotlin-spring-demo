@@ -4,10 +4,14 @@ FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
 COPY gradlew .
-COPY gradle gradle
+COPY gradle/wrapper gradle/wrapper
+RUN chmod +x gradlew
+# download gradle
+RUN ./gradlew --version --no-daemon
+
+COPY gradle/libs.versions.toml gradle/libs.versions.toml
 COPY build.gradle.kts settings.gradle.kts gradle.properties ./
 
-RUN chmod +x gradlew
 RUN ./gradlew dependencies --no-daemon || true
 
 COPY src src
