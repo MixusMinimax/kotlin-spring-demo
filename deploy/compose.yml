@@ -15,7 +15,7 @@ services:
 
   app:
     container_name: spring-demo
-    image: ghcr.io/mixusminimax/kotlin-spring-demo:0.0.1
+    image: ghcr.io/mixusminimax/kotlin-spring-demo:0.0.2
     depends_on:
       db:
         condition: service_healthy

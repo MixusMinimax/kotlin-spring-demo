@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "com.barmetler"
-version = "0.0.2-SNAPSHOT"
+version = "0.0.2"
 description = "spring-demo"
 
 java {
