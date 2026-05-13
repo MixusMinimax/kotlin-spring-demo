@@ -1,13 +1,13 @@
-package com.barmetler.springdemo.user.usecases
+package com.barmetler.springdemo.feature.user.usecases
 
-import com.barmetler.springdemo.user.application.model.UserIdentifier
-import com.barmetler.springdemo.user.application.service.JwtFactory
-import com.barmetler.springdemo.user.application.service.RefreshTokenFactory
-import com.barmetler.springdemo.user.application.usecase.LoginUseCase
-import com.barmetler.springdemo.user.domain.model.RefreshToken
-import com.barmetler.springdemo.user.domain.model.User
-import com.barmetler.springdemo.user.infrastructure.persistence.RefreshTokenRepository
-import com.barmetler.springdemo.user.infrastructure.persistence.UserRepository
+import com.barmetler.springdemo.feature.user.application.model.UserIdentifier
+import com.barmetler.springdemo.feature.user.application.service.JwtFactory
+import com.barmetler.springdemo.feature.user.application.service.RefreshTokenFactory
+import com.barmetler.springdemo.feature.user.application.usecase.LoginUseCase
+import com.barmetler.springdemo.feature.user.domain.model.RefreshToken
+import com.barmetler.springdemo.feature.user.domain.model.User
+import com.barmetler.springdemo.feature.user.infrastructure.persistence.RefreshTokenRepository
+import com.barmetler.springdemo.feature.user.infrastructure.persistence.UserRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldEqual
 import io.mockk.Runs

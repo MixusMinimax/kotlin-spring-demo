@@ -1,8 +1,8 @@
 package com.barmetler.springdemo
 
-import com.barmetler.springdemo.user.api.dto.LoginRequest
-import com.barmetler.springdemo.user.application.model.UserIdentifier
-import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
+import com.barmetler.springdemo.feature.user.api.dto.LoginRequest
+import com.barmetler.springdemo.feature.user.application.model.UserIdentifier
+import com.barmetler.springdemo.feature.user.application.usecase.CreateUserUseCase
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldEqual

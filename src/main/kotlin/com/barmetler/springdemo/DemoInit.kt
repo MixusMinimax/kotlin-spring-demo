@@ -1,6 +1,6 @@
 package com.barmetler.springdemo
 
-import com.barmetler.springdemo.user.application.usecase.CreateUserUseCase
+import com.barmetler.springdemo.feature.user.application.usecase.CreateUserUseCase
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
