@@ -1,12 +1,14 @@
 package com.barmetler.springdemo.feature.user.application.usecase
 
 import com.barmetler.springdemo.feature.user.domain.model.RefreshToken
-import com.barmetler.springdemo.feature.user.infrastructure.persistence.RefreshTokenRepository
+import com.barmetler.springdemo.feature.user.infrastructure.repository.RefreshTokenRepository
 import com.barmetler.springdemo.security.SecurityProperties
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import java.time.Instant
 
 @Component
+@Transactional(readOnly = false)
 class CleanupRefreshTokensUseCase(
     private val props: SecurityProperties,
     private val refreshTokenRepository: RefreshTokenRepository,

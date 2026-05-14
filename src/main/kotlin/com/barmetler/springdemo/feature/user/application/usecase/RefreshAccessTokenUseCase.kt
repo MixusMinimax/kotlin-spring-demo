@@ -1,7 +1,7 @@
 package com.barmetler.springdemo.feature.user.application.usecase
 
 import com.barmetler.springdemo.feature.user.application.service.JwtFactory
-import com.barmetler.springdemo.feature.user.infrastructure.persistence.RefreshTokenRepository
+import com.barmetler.springdemo.feature.user.infrastructure.repository.RefreshTokenRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.CredentialsExpiredException

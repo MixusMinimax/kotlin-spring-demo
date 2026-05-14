@@ -6,8 +6,8 @@ import com.barmetler.springdemo.feature.user.application.service.RefreshTokenFac
 import com.barmetler.springdemo.feature.user.application.usecase.LoginUseCase
 import com.barmetler.springdemo.feature.user.domain.model.RefreshToken
 import com.barmetler.springdemo.feature.user.domain.model.User
-import com.barmetler.springdemo.feature.user.infrastructure.persistence.RefreshTokenRepository
-import com.barmetler.springdemo.feature.user.infrastructure.persistence.UserRepository
+import com.barmetler.springdemo.feature.user.infrastructure.repository.RefreshTokenRepository
+import com.barmetler.springdemo.feature.user.infrastructure.repository.UserRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldEqual
 import io.mockk.Runs

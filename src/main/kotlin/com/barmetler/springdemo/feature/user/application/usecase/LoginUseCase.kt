@@ -4,8 +4,8 @@ import com.barmetler.springdemo.feature.user.application.model.UserIdentifier
 import com.barmetler.springdemo.feature.user.application.service.JwtFactory
 import com.barmetler.springdemo.feature.user.application.service.RefreshTokenFactory
 import com.barmetler.springdemo.feature.user.domain.model.RefreshToken
-import com.barmetler.springdemo.feature.user.infrastructure.persistence.RefreshTokenRepository
-import com.barmetler.springdemo.feature.user.infrastructure.persistence.UserRepository
+import com.barmetler.springdemo.feature.user.infrastructure.repository.RefreshTokenRepository
+import com.barmetler.springdemo.feature.user.infrastructure.repository.UserRepository
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component

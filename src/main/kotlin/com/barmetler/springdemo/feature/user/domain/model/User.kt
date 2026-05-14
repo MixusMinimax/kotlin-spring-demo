@@ -1,9 +1,12 @@
 package com.barmetler.springdemo.feature.user.domain.model
 
+import com.barmetler.springdemo.feature.organization.domain.model.OrganizationUser
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import java.util.UUID
 
@@ -19,4 +22,7 @@ class User(
 
     @Column(nullable = false)
     var passwordHash: String,
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var organizations: MutableSet<OrganizationUser> = HashSet(),
 )

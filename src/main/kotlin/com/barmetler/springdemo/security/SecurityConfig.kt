@@ -91,6 +91,7 @@ class SecurityConfig {
         return Converter {
             val auth = converter.convert(it) as JwtAuthenticationToken
             // TODO maybe wrap jwt
+            // TODO we can cache this if we want
             JwtAuthenticationToken(auth.token, auth.authorities, auth.name)
         }
     }

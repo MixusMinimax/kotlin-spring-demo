@@ -1,4 +1,4 @@
-package com.barmetler.springdemo.feature.user.infrastructure.persistence
+package com.barmetler.springdemo.feature.user.infrastructure.repository
 
 import com.barmetler.springdemo.feature.user.domain.model.RefreshToken
 import org.springframework.data.jpa.repository.EntityGraph
