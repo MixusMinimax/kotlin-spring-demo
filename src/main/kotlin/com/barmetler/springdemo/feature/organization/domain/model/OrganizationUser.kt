@@ -6,7 +6,6 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.MapsId
-import org.hibernate.annotations.BatchSize
 import java.time.Instant
 
 @Entity
@@ -15,7 +14,7 @@ class OrganizationUser(
     var id: OrganizationUserId,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @BatchSize(size = 50)
+//    @BatchSize(size = 50) // this ain't working
     @MapsId("organizationId")
     var organization: Organization,
 
