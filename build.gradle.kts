@@ -39,6 +39,7 @@ configurations {
 
 dependencies {
     // Spring Boot starters
+    implementation(libs.spring.boot.starter.cache)
     implementation(libs.spring.boot.starter.dataJpa)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.oauth2ResourceServer)
