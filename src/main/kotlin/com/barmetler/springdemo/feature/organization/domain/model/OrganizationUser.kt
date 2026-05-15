@@ -26,6 +26,15 @@ class OrganizationUser(
 
     // I can add permissions and roles here
 ) {
+    constructor(organization: Organization, user: User) : this(
+        id = OrganizationUserId(
+            organizationId = organization.id!!,
+            userId = user.id!!,
+        ),
+        organization = organization,
+        user = user,
+    )
+
     final override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is OrganizationUser) return false

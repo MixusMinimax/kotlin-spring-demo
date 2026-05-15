@@ -18,10 +18,18 @@ class Organization(
     @GeneratedValue
     var id: UUID? = null,
 
+    /**
+     * Business key with max length is 255.
+     *
+     * Should follow `kebab-case`.
+     */
     @Column(length = 255)
     @NaturalId(mutable = true)
     var slug: String,
 
+    /**
+     * Human-readable name.
+     */
     @Column(nullable = false)
     var name: String,
 ) {

@@ -12,7 +12,7 @@ class ListOrganizationsUseCase(
     private val organizationRepository: OrganizationRepository,
 ) {
     fun list(slugAfter: String? = null, maxCount: Int? = null): List<OrganizationRecord> {
-        val organizations = organizationRepository.findAllBySlugPaginated(slugAfter = slugAfter, maxCount = maxCount)
-        return organizations.asSequence().map { it.toOrganizationRecord() }.toList()
+        val organizations = organizationRepository.findAllPaginated(slugAfter = slugAfter, maxCount = maxCount)
+        return organizations.map { it.toOrganizationRecord() }
     }
 }

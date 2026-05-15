@@ -14,7 +14,7 @@ class OrganizationRepositoryCustomImpl(
     @PersistenceContext
     private val em: EntityManager,
 ) : OrganizationRepositoryCustom {
-    override fun findAllBySlugPaginated(slugAfter: String?, maxCount: Int?): List<Organization> {
+    override fun findAllPaginated(slugAfter: String?, maxCount: Int?): List<Organization> {
         Page.page(1, 2).keyedBy(Order.asc(Organization_.slug))
         val session = em.unwrap(Session::class.java)
         val cb = session.criteriaBuilder

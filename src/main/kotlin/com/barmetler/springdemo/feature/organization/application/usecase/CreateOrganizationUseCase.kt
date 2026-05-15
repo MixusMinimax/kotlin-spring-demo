@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional
 class CreateOrganizationUseCase(
     private val organizationRepository: OrganizationRepository,
 ) {
+    /**
+     * Create a new [Organization] with the given [slug] and [name].
+     *
+     * The [slug] acts as a natural identifier.
+     */
     fun create(slug: String, name: String): OrganizationRecord {
         val org = Organization(slug = slug, name = name)
         val saved = organizationRepository.save(org)
