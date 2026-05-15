@@ -48,6 +48,12 @@ dependencies {
     implementation(libs.spring.boot.starter.actuator)
     annotationProcessor(libs.spring.boot.configurationProcessor)
 
+//    // Blaze Persistence
+//    implementation(platform(libs.blaze.bom))
+//    implementation(libs.blaze.core.api)
+//    runtimeOnly(libs.blaze.core.impl)
+//    runtimeOnly(libs.blaze.integration.hibernate)
+
     // crypt
     runtimeOnly(libs.google.tink)
 

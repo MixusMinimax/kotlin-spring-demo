@@ -8,6 +8,8 @@ springdoc = "3.0.2"
 google-tink = "1.21.0"
 springmockk = "5.0.1"
 
+#blaze = "1.6.18"
+
 kotest = "6.1.11"
 ktlint = "14.2.0"
 detekt = "2.0.0-alpha.3"
@@ -23,6 +25,11 @@ spring-boot-starter-actuator = { group = "org.springframework.boot", name = "spr
 spring-boot-configurationProcessor = { group = "org.springframework.boot", name = "spring-boot-configuration-processor" }
 
 postgresql = { group = "org.postgresql", name = "postgresql" }
+
+#blaze-bom = { group = "com.blazebit", name = "blaze-persistence-bom", version.ref = "blaze" }
+#blaze-core-api = { group = "com.blazebit", name = "blaze-persistence-core-api" }
+#blaze-core-impl = { group = "com.blazebit", name = "blaze-persistence-core-impl" }
+#blaze-integration-hibernate = { group = "com.blazebit", name = "blaze-persistence-integration-hibernate-7.2" }
 
 google-tink = { group = "com.google.crypto.tink", name = "tink", version.ref = "google-tink" }
 
