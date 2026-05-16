@@ -10,7 +10,11 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import org.springframework.core.convert.converter.Converter
+import org.springframework.security.access.PermissionEvaluator
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
 import org.springframework.security.authentication.AbstractAuthenticationToken
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -28,6 +32,7 @@ import java.util.Random
 
 @Configuration
 @EnableConfigurationProperties(SecurityProperties::class)
+@EnableMethodSecurity
 class SecurityConfig {
     @Bean
     fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
@@ -84,8 +89,8 @@ class SecurityConfig {
         val converter = JwtAuthenticationConverter()
 
         converter.setJwtGrantedAuthoritiesConverter { jwt ->
-            val roles = jwt.getClaimAsStringList("roles") ?: emptyList()
-            roles.map { SimpleGrantedAuthority("ROLE_$it") }
+            val roles = jwt.getClaimAsStringList("permissions") ?: emptyList()
+            roles.mapTo(HashSet()) { SimpleGrantedAuthority(it) }
         }
 
         return Converter {
@@ -94,6 +99,15 @@ class SecurityConfig {
             // TODO we can cache this if we want
             JwtAuthenticationToken(auth.token, auth.authorities, auth.name)
         }
+    }
+
+    @Bean
+    fun methodSecurityExpressionHandler(
+        permissionEvaluator: PermissionEvaluator,
+    ): MethodSecurityExpressionHandler {
+        val handler = DefaultMethodSecurityExpressionHandler()
+        handler.setPermissionEvaluator(permissionEvaluator)
+        return handler
     }
 
     @Bean(defaultCandidate = false)

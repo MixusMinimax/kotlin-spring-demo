@@ -6,6 +6,7 @@ import com.barmetler.springdemo.feature.user.infrastructure.repository.UserRepos
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.hibernate.cache.spi.access.AccessType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -22,6 +23,14 @@ class AddUserToOrganizationUseCase(
     /**
      * Add a user to a given organization.
      */
+    @PreAuthorize(
+        """
+            hasPermission(
+                #organizationId,
+                T(com.barmetler.springdemo.security.authorization.OrganizationPermission).ADD_USER
+            ) 
+        """,
+    )
     fun add(organizationId: UUID, userId: UUID) {
         AccessType.READ_ONLY
         // This approach results in a single INSERT query, as getting references does
@@ -33,6 +42,6 @@ class AddUserToOrganizationUseCase(
         val userRef = userRepository.getReferenceById(userId)
         val ou = OrganizationUser(organization = orgRef, user = userRef)
         em.persist(ou)
-        // TODO map remote key constraint exc into NotFound
+        // TODO map remote key constraint exc into NotFound / AlreadyExists
     }
 }
