@@ -25,4 +25,9 @@ class User(
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     var organizations: MutableSet<OrganizationUser> = HashSet(),
-)
+) {
+    fun encodePermissions(): List<String> =
+        organizations.asSequence()
+            .flatMap { org -> org.permissions.asSequence().map { it.toAuthorityString(org.organization.id!!) } }
+            .toList()
+}

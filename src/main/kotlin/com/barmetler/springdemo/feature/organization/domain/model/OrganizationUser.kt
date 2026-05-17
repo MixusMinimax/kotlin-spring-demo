@@ -1,11 +1,17 @@
 package com.barmetler.springdemo.feature.organization.domain.model
 
 import com.barmetler.springdemo.feature.user.domain.model.User
+import com.barmetler.springdemo.security.permission.OrganizationPermission
+import jakarta.persistence.ElementCollection
 import jakarta.persistence.EmbeddedId
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.MapsId
+import org.hibernate.annotations.JdbcType
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType
 import java.time.Instant
 
 @Entity
@@ -24,7 +30,10 @@ class OrganizationUser(
 
     var createdOn: Instant = Instant.now(),
 
-    // I can add permissions and roles here
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType::class)
+    var permissions: MutableSet<OrganizationPermission> = HashSet(),
 ) {
     constructor(organization: Organization, user: User) : this(
         id = OrganizationUserId(

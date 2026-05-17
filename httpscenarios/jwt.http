@@ -1,0 +1,77 @@
+###
+POST http://localhost:8080/organizations/add-user
+Content-Type: application/json
+
+{
+  "organizationId": "16195aa4-e234-4aa1-8430-62b65851705c",
+  "userId": "f7266604-9eb0-4c69-a48f-a36dc309c7e8"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "demo@example.com"
+  },
+  "password": "password123"
+}
+
+> {%
+    /**
+     * For some reason, this can't be used in the type tag.
+     *
+     * @typedef {{
+     *   sub: string,
+     *   exp: number,
+     *   iat: number,
+     *   permissions: string[]
+     * }} Payload
+     */
+
+    /** @type {{ sessionToken?: string | undefined }} */
+    const body = response.body
+    const jwt = body.sessionToken
+    client.assert(jwt !== undefined && jwt !== null)
+    client.global.set("auth_token", jwt)
+
+    client.test("check token parsing", function () {
+        const [headerS, payloadS, chk] = jwt.split(".")
+        const header = JSON.parse(atob(headerS))
+        const payload = JSON.parse(atob(payloadS))
+        console.log(header)
+        console.log(payload)
+        console.log(chk)
+    })
+
+    client.test("check permissions", function () {
+        const [, payloadS,] = jwt.split(".")
+
+        /**
+         * @type {{
+         *   sub: string,
+         *   exp: number,
+         *   iat: number,
+         *   permissions: string[]
+         * }}
+         */
+        const payload = JSON.parse(atob(payloadS))
+        client.assert(typeof payload === "object")
+        client.assert(payload.permissions instanceof Array)
+        client.assert(payload.permissions.indexOf(
+            "organization:16195aa4-e234-4aa1-8430-62b65851705c:ADD_USER"
+        ) != -1)
+    })
+
+%}
+
+###
+POST http://localhost:8080/organizations/add-user
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "organizationId": "16195aa4-e234-4aa1-8430-62b65851705c",
+  "userId": "f7266604-9eb0-4c69-a48f-a36dc309c7e8"
+}

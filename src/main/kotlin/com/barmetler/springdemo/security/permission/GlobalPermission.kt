@@ -6,12 +6,15 @@ enum class GlobalPermission : Permission {
     CREATE_ORGANIZATION,
     ;
 
-    override val targetKind = "global"
+    override val targetKind get() = GlobalPermission.targetKind
 
     override fun toAuthorityString(target: Any): String = "$targetKind:$name"
 
-    companion object {
+    companion object : Permission.PermissionCompanion<GlobalPermission> {
         @Language("jvm-class-name")
         const val CN = "com.barmetler.springdemo.security.permission.GlobalPermission"
+
+        override val targetKind = "global"
+        override fun valueOf(value: String) = GlobalPermission.valueOf(value)
     }
 }

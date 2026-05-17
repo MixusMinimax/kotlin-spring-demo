@@ -89,7 +89,7 @@ class SecurityConfig {
         val converter = JwtAuthenticationConverter()
 
         converter.setJwtGrantedAuthoritiesConverter { jwt ->
-            val roles = jwt.getClaimAsStringList("permissions") ?: emptyList()
+            val roles = jwt.getClaimAsStringList(MyJwtClaimNames.PERMISSIONS) ?: emptyList()
             roles.mapTo(HashSet()) { SimpleGrantedAuthority(it) }
         }
 

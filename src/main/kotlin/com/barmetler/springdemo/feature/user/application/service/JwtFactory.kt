@@ -1,6 +1,7 @@
 package com.barmetler.springdemo.feature.user.application.service
 
 import com.barmetler.springdemo.feature.user.domain.model.User
+import com.barmetler.springdemo.security.MyJwtClaimNames
 import com.barmetler.springdemo.security.SecurityProperties
 import org.springframework.security.oauth2.jwt.JwsHeader
 import org.springframework.security.oauth2.jwt.JwtClaimsSet
@@ -16,7 +17,7 @@ class JwtFactory(
 ) {
     fun buildToken(
         user: User,
-        extraClaims: MutableMap<String, Any>? = null,
+        claimsModifier: ((MutableMap<String, Any>) -> Unit)? = null,
     ): String {
         val now = Instant.now()
         return encoder.encode(
@@ -25,7 +26,10 @@ class JwtFactory(
                     .let { b -> props.jwt.jwk.signingKid?.let { b.keyId(it) } ?: b }
                     .build(),
                 JwtClaimsSet.builder()
-                    .claims { extraClaims?.let(it::putAll) }
+                    .claim(MyJwtClaimNames.PERMISSIONS, user.encodePermissions())
+                    // ^^^   claims before this point can be overridden by [claimsModifier]
+                    .apply { claimsModifier?.let { claims(it) } }
+                    // vvv   claims after this point override anything set by [claimsModifier]
                     .subject(user.id!!.toString())
                     .issuedAt(now)
                     .expiresAt(now.plus(props.jwt.expirationTime))
