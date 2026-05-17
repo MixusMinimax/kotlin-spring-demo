@@ -4,6 +4,8 @@ import com.barmetler.springdemo.feature.organization.application.mapper.toOrgani
 import com.barmetler.springdemo.feature.organization.application.model.OrganizationRecord
 import com.barmetler.springdemo.feature.organization.domain.model.Organization
 import com.barmetler.springdemo.feature.organization.infrastructure.repository.OrganizationRepository
+import com.barmetler.springdemo.security.permission.GlobalPermission
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,6 +19,9 @@ class CreateOrganizationUseCase(
      *
      * The [slug] acts as a natural identifier.
      */
+    @PreAuthorize(
+        "hasPermission('global', T(${GlobalPermission.CN}).CREATE_ORGANIZATION)",
+    )
     fun create(slug: String, name: String): OrganizationRecord {
         val org = Organization(slug = slug, name = name)
         val saved = organizationRepository.save(org)
