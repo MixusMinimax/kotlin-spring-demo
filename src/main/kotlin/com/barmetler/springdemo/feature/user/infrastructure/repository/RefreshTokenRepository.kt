@@ -13,7 +13,7 @@ import java.util.Optional
 @Repository
 interface RefreshTokenRepository : JpaRepository<RefreshToken, String> {
 
-    @EntityGraph(value = "RefreshToken.user", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = ["user.organizations.permissions"], type = EntityGraph.EntityGraphType.LOAD)
     override fun findById(id: String): Optional<RefreshToken>
 
     @Modifying

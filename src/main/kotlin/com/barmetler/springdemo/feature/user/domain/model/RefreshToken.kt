@@ -6,15 +6,9 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
-import jakarta.persistence.NamedAttributeNode
-import jakarta.persistence.NamedEntityGraph
 import java.time.Instant
 
 @Entity
-@NamedEntityGraph(
-    name = "RefreshToken.user",
-    attributeNodes = [NamedAttributeNode("user")],
-)
 class RefreshToken(
     @Id
     @Column(length = 255)
