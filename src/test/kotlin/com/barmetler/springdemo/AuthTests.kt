@@ -1,12 +1,18 @@
 package com.barmetler.springdemo
 
 import com.barmetler.springdemo.feature.organization.api.dto.AddUserToOrganizationRequest
+import com.barmetler.springdemo.feature.organization.domain.model.OrganizationUser
+import com.barmetler.springdemo.feature.organization.domain.model.OrganizationUserId
 import com.barmetler.springdemo.feature.user.api.dto.LoginRequest
 import com.barmetler.springdemo.feature.user.application.model.UserIdentifier
 import com.barmetler.springdemo.feature.user.application.usecase.CreateUserUseCase
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.kotest.core.extensions.ApplyExtension
 import io.kotest.matchers.equals.shouldEqual
+import io.kotest.matchers.nulls.beNull
+import io.kotest.matchers.shouldNot
+import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
 import jakarta.transaction.Transactional
 import org.hamcrest.Matchers.emptyString
 import org.hamcrest.Matchers.not
@@ -28,7 +34,7 @@ import tools.jackson.databind.ObjectMapper
 import java.util.UUID
 import kotlin.test.assertNotNull
 
-@Suppress("LongMethod")
+@Suppress("LongMethod", "LongParameterList", "UnusedVariable")
 @ApplyExtension(io.kotest.extensions.spring.SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = [SpringDemoApplication::class])
 @AutoConfigureMockMvc
@@ -43,6 +49,8 @@ class AuthTests @Autowired constructor(
 
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     private val sessionFactory: SessionFactory,
+    @PersistenceContext
+    private val entityManager: EntityManager,
 ) {
     val log = KotlinLogging.logger { }
 
@@ -152,6 +160,10 @@ class AuthTests @Autowired constructor(
         }.andExpect {
             status { isOk() }
         }
+        entityManager.find(
+            OrganizationUser::class.java,
+            OrganizationUserId(organizationId = orgId, userId = clientId),
+        ) shouldNot beNull()
     }
 
     @Suppress("SameParameterValue")
