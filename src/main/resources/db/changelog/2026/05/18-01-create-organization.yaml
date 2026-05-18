@@ -1,0 +1,117 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026-05-18-01-create-organization-1
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_organization
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: slug
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+            tableName: organization
+  - changeSet:
+      id: 2026-05-18-01-create-organization-2
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_on
+                  type: DATETIME
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_organizationuser
+                  name: organization_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_organizationuser
+                  name: user_id
+                  type: UUID
+            tableName: organization_user
+  - changeSet:
+      id: 2026-05-18-01-create-organization-3
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: organization_user_organization_id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: organization_user_user_id
+                  type: UUID
+              - column:
+                  name: permissions
+                  type: VARCHAR(255)
+            tableName: organization_user_permissions
+  - changeSet:
+      id: 2026-05-18-01-create-organization-4
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addUniqueConstraint:
+            columnNames: slug
+            constraintName: uc_organization_slug
+            tableName: organization
+  - changeSet:
+      id: 2026-05-18-01-create-organization-5
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: organization_id
+            baseTableName: organization_user
+            constraintName: FK_ORGANIZATIONUSER_ON_ORGANIZATION
+            referencedColumnNames: id
+            referencedTableName: organization
+  - changeSet:
+      id: 2026-05-18-01-create-organization-6
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: organization_user
+            constraintName: FK_ORGANIZATIONUSER_ON_USER
+            referencedColumnNames: id
+            referencedTableName: my_user
+  - changeSet:
+      id: 2026-05-18-01-create-organization-8
+      author: maxi
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: organization_user_organization_id,organization_user_user_id
+            baseTableName: organization_user_permissions
+            constraintName: fk_organizationuser_permissions_on_organization_user
+            referencedColumnNames: organization_id,user_id
+            referencedTableName: organization_user
+

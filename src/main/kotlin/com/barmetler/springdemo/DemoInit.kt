@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Component
-@Profile("demo-data")
+@Profile("demo")
 @Transactional
 class DemoInit(
     @PersistenceContext
@@ -31,17 +31,21 @@ class DemoInit(
         session.createNativeMutationQuery(
             """
                 INSERT INTO my_user(id, email, password_hash)
-                VALUES (:user_id, :email, :password_hash);
+                VALUES (:user_id, :email, :password_hash)
+                ON CONFLICT DO NOTHING;
                 
                 INSERT INTO organization(id, slug, name)
-                VALUES (:org_id, :slug, :name);
+                VALUES (:org_id, :slug, :name)
+                ON CONFLICT DO NOTHING;
                 
                 INSERT INTO organization_user(organization_id, user_id, created_on)
-                VALUES (:org_id, :user_id, NOW());
+                VALUES (:org_id, :user_id, NOW())
+                ON CONFLICT DO NOTHING;
                 
                 INSERT INTO organization_user_permissions(
                     organization_user_organization_id, organization_user_user_id, permissions)
-                VALUES (:org_id, :user_id, :perm);
+                VALUES (:org_id, :user_id, :perm)
+                ON CONFLICT DO NOTHING;
             """,
         )
             .setParameter("user_id", userId)

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1778168651509-1
+      id: 2026-05-07-01-create-user-1
       author: maxi
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -25,7 +25,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: my_user
   - changeSet:
-      id: 1778168651509-2
+      id: 2026-05-07-01-create-user-2
       author: maxi
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -53,7 +53,7 @@ databaseChangeLog:
                   type: UUID
             tableName: refresh_token
   - changeSet:
-      id: 1778168651509-3
+      id: 2026-05-07-01-create-user-3
       author: maxi
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -62,7 +62,7 @@ databaseChangeLog:
             constraintName: uc_my_user_email
             tableName: my_user
   - changeSet:
-      id: 1778168651509-4
+      id: 2026-05-07-01-create-user-4
       author: maxi
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:

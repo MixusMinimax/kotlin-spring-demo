@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SpringDemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-    <option name="ACTIVE_PROFILES" value="dev,localhost,createdb,demo-data" />
+    <option name="ACTIVE_PROFILES" value="dev,localhost,demo" />
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <module name="spring-demo.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.barmetler.springdemo.SpringDemoApplication" />
