@@ -6,3 +6,5 @@ style:
     active: true
     ignoreAnnotated:
       - 'org.springframework.boot.context.properties.ConfigurationProperties'
+  ReturnCount:
+    excludeGuardClauses: true

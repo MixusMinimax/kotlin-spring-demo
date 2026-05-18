@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "com.barmetler"
-version = "0.0.2"
+version = "0.1.0-SNAPSHOT"
 description = "spring-demo"
 
 java {
@@ -39,6 +39,7 @@ configurations {
 
 dependencies {
     // Spring Boot starters
+    implementation(libs.spring.boot.starter.cache)
     implementation(libs.spring.boot.starter.dataJpa)
     implementation(libs.spring.boot.starter.security)
     implementation(libs.spring.boot.starter.oauth2ResourceServer)
@@ -46,6 +47,12 @@ dependencies {
     implementation(libs.spring.boot.starter.liquibase)
     implementation(libs.spring.boot.starter.actuator)
     annotationProcessor(libs.spring.boot.configurationProcessor)
+
+//    // Blaze Persistence
+//    implementation(platform(libs.blaze.bom))
+//    implementation(libs.blaze.core.api)
+//    runtimeOnly(libs.blaze.core.impl)
+//    runtimeOnly(libs.blaze.integration.hibernate)
 
     // crypt
     runtimeOnly(libs.google.tink)
