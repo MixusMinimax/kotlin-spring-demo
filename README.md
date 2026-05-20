@@ -7,6 +7,16 @@ A ready-to-run docker compose setup can be found in [deploy](./deploy).
 An equivalent setup that instead of pulling the precompiled image builds the [Dockerfile](./Dockerfile) locally exists
 in [deploy-build](./deploy-build).
 
+In IntelliJ, you can run the included http scenarios:
+
+* [httpscenarios/authenticate.http](httpscenarios/authenticate.http)  
+  We log in, then refresh our jwt using the refresh token (intellij saves cookies between requests), and then use that
+  jwt for authentication. Lastly, we log out. Keep in mind that the jwt can still be used until it expires in 15min,
+  that is the tradeoff of server-stateless authentication.
+* [httpscenarios/jwt.http](httpscenarios/jwt.http)    
+  This one tries to add a user to an organization. Without logging in, it will not work. Then it logs in, and tries
+  again. You can also take a look at the parsed jwt.
+
 ---
 
 ## Local Development
