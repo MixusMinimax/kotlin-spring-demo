@@ -15,37 +15,37 @@ For local development, start a postgres database on port 5432. For that, you can
 provided [compose.yml](./compose.yml).
 
 IntelliJ should automatically pick up the provided [run configuration](./.run/SpringDemoApplication.run.xml). If not,
-add a basic spring boot run configuration with the following spring profiles: `dev,localhost`.
+add a basic spring boot run configuration with the following spring profiles: `dev,localhost,demo`.
 
 ### Profiles
 
-Profile `dev` ([props](./src/main/resources/application-dev.properties)) is used for populating the database with a demo
-user:
+* Profile `dev` ([props](src/main/resources/application-dev.properties)) should be enabled, as it sets the jwk path to
+  the one in the [resources](src/main/resources) folder. It also enables all spring actuator endpoints.
 
-```json
-{
-  "user": {
-    "email": "demo@example.com"
-  },
-  "password": "password123"
-}
-```
+* Profile `demo` is used for populating the database with a demo user:
 
-It also configures the service to use the [jwk.json](./src/main/resources/jwk.json) included in the classpath, increases
-logging, and enables all spring actuator endpoints.
+  ```json
+  {
+    "user": {
+      "email": "demo@example.com"
+    },
+    "password": "password123"
+  }
+  ```
 
----
+  It also creates a demo organization with the `ADD_USER` permission added to the demo user.
+  Read [DemoInit.kt](src/main/kotlin/com/barmetler/springdemo/DemoInit.kt).
 
-Profile `localhost` ([props](./src/main/resources/application-localhost.properties)) configures the database connection
-to use the local database. This profile can be omitted if the following environment variables are set (in accordance
-with your running database):
+* Profile `localhost` ([props](./src/main/resources/application-localhost.properties)) configures the database
+  connection to use the local database. This profile can be omitted if the following environment variables are set (in
+  accordance with your running database):
 
-```dotenv
-POSTGRES_PASSWORD=postgres
-POSTGRES_USER=postgres
-POSTGRES_DB=postgres
-POSTGRES_HOSTNAME=localhost
-```
+  ```dotenv
+  POSTGRES_PASSWORD=postgres
+  POSTGRES_USER=postgres
+  POSTGRES_DB=postgres
+  POSTGRES_HOSTNAME=localhost
+  ```
 
 ### Running Tests
 
